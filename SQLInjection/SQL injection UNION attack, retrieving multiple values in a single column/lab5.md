@@ -1,6 +1,6 @@
 # Write-up - PortSwigger SQLi Lab 5
 
-Voy a hacer un laboratorio de Port Swigger. El lab 5 de SQLi (En esta url: https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column) Descripción: Tradúcela al Español:
+Voy a hacer un laboratorio de Port Swigger. El lab 5 de SQLi (En esta url: https://portswigger.net/web-security/sql-injection/union-attacks/lab-retrieve-multiple-values-in-single-column) Descripción:
 
 Lab: SQL injection UNION attack, retrieving multiple values in a single column.
 
