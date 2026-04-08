@@ -2,7 +2,7 @@
 
 Voy a hacer un laboratorio de Port Swigger. El lab 3 de SQLi (En esta url: https://portswigger.net/web-security/sql-injection/union-attacks/lab-determine-number-of-columns)
 
-## Descripción: Tradúcela al Español
+## Descripción:
 
 **Lab: SQL injection UNION attack, determining the number of columns returned by the query**
 
