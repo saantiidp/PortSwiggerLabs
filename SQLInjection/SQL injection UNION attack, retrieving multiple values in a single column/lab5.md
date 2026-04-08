@@ -20,7 +20,7 @@ La página web tiene el aspecto de la imagen 1.
 
 ![Imagen 1](imagenes/imagen1.png)
 
-**Referencia a la imagen 1:** Vista inicial del laboratorio.
+**imagen 1:** Vista inicial del laboratorio.
 
 Una vez dentro, abrimos burpsuitepro y en el navegador activamos el FoxyProxy para que en el HTTP History vayan apareciendo las distintas Requests mientras navegamos por la página. Como ya nos da pistas la descripción del laboratorio, vamos a hacer el mismo de proceso de SQL injection UNION.
 
@@ -95,7 +95,7 @@ Vemos que la salida en la página es la de la imagen 2.
 
 ![Imagen 2](imagenes/imagen2.png)
 
-**Referencia a la imagen 2:** Salida de la inyección mostrando usuarios y contraseñas concatenados con `~` en la misma columna.
+**imagen 2:** Salida de la inyección mostrando usuarios y contraseñas concatenados con `~` en la misma columna.
 
 Nos salen usuarios y su contraseña enlazados por ~ en la misma columna
 
@@ -111,10 +111,10 @@ y rellenamos con las credenciales administrator y 4qeqv833wzlpngct1izj (imagen 3
 
 ![Imagen 3](imagenes/imagen3.png)
 
-**Referencia a la imagen 3:** Login con las credenciales del usuario `administrator`.
+**imagen 3:** Login con las credenciales del usuario `administrator`.
 
 y cuando le damos al botón Login nos sale nuestro panel administrator y que hemos completado el laboratorio (imagen 4)
 
 ![Imagen 4](imagenes/imagen4.png)
 
-**Referencia a la imagen 4:** Panel de `administrator` y confirmación de laboratorio resuelto.
+**imagen 4:** Panel de `administrator` y confirmación de laboratorio resuelto.
