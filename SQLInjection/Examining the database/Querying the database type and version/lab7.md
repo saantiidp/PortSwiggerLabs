@@ -32,7 +32,7 @@ https://0a2700ca03e1645a837729b0007700fa.web-security-academy.net/
 
 La web es como imagen 1:
 
-![Imagen 1](imagenes/imagen1.png)
+![Imagen 1](imagenes2/imagen1.png)
 
 Referencia imagen 1: Vista inicial.
 
@@ -83,7 +83,7 @@ Explicación:
 
 Resultado (imagen 2):
 
-![Imagen 2](imagenes/imagen2.png)
+![Imagen 2](imagenes2/imagen2.png)
 
 Referencia imagen 2: versión mostrada.
 
