@@ -2,7 +2,7 @@
 
 Voy a hacer un laboratorio de Port Swigger. El lab 6 de SQLi (En esta url: https://portswigger.net/web-security/sql-injection/examining-the-database/lab-querying-database-version-oracle)
 
-## Descripción: Tradúcela al Español
+## Descripción:
 
 **Lab: SQL injection attack, querying the database type and version on Oracle.**
 
