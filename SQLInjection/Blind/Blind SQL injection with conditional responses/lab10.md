@@ -6,27 +6,23 @@ Voy a hacer un laboratorio de Port Swigger. El lab 9 de SQLi (En esta url: https
 
 **Lab: Blind SQL injection with conditional responses**
 
-**Traducción al Español:**
-
-**Laboratorio: inyección SQL ciega con respuestas condicionales.**
-
 This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
 
 The results of the SQL query are not returned, and no error messages are displayed. But the application includes a Welcome back message in the page if the query returns any rows.
 
-**Traducción:**
-Este laboratorio contiene una vulnerabilidad de inyección SQL ciega. La aplicación usa una cookie de rastreo para analítica y realiza una consulta SQL que contiene el valor de la cookie enviada.
-
-Los resultados de la consulta SQL no se devuelven y no se muestran mensajes de error. Pero la aplicación incluye un mensaje de **Welcome back** en la página si la consulta devuelve alguna fila.
-
 The database contains a different table called users, with columns called username and password. You need to exploit the blind SQL injection vulnerability to find out the password of the administrator user.
-
-**Traducción:**
-La base de datos contiene una tabla diferente llamada `users`, con columnas llamadas `username` y `password`. Necesitas explotar la vulnerabilidad de inyección SQL ciega para averiguar la contraseña del usuario `administrator`.
 
 To solve the lab, log in as the administrator user.
 
 **Traducción:**
+**Laboratorio: inyección SQL ciega con respuestas condicionales.**
+
+Este laboratorio contiene una vulnerabilidad de inyección SQL ciega. La aplicación usa una cookie de rastreo para analítica y realiza una consulta SQL que contiene el valor de la cookie enviada.
+
+Los resultados de la consulta SQL no se devuelven y no se muestran mensajes de error. Pero la aplicación incluye un mensaje de **Welcome back** en la página si la consulta devuelve alguna fila.
+
+La base de datos contiene una tabla diferente llamada `users`, con columnas llamadas `username` y `password`. Necesitas explotar la vulnerabilidad de inyección SQL ciega para averiguar la contraseña del usuario `administrator`.
+
 Para resolver el laboratorio, inicia sesión como el usuario `administrator`.
 
 ---
